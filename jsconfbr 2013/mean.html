@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>window.crypto.generateRandomValues</title>
+  </head>
+  <body>
+    <script>
+        threeTimesAlert(randomGenerator());
+
+        alert("Being mean now...");
+        beMean();
+
+        threeTimesAlert(randomGenerator());
+
+        function randomGenerator() {
+            var array = new Uint32Array(1);
+            return function() {
+                window.crypto.getRandomValues(array);
+                return array[0];
+            }
+        }
+
+        function beMean() {
+            window.crypto.getRandomValues = function(array) {
+                array[0] = 42;
+            }
+        }
+
+        function threeTimesAlert(f) {
+            for (var i=0; i < 3; i++) { alert(f()); }
+        }           
+    </script>
+  </body>
+</html>
